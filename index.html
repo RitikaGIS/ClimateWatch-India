@@ -1,0 +1,276 @@
+<div class="app">
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">🌍</div>
+      <div>
+        <h1>CLIMATEWATCH INDIA</h1>
+        <p>CLIMATE INTELLIGENCE SYSTEM</p>
+      </div>
+    </div>
+
+    <div class="header-status">
+      <span class="live-dot"></span>
+      LIVE WEATHER MONITORING
+    </div>
+  </header>
+
+  <div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="section">
+        <h3>LOCATION SEARCH</h3>
+
+        <div class="search-box">
+          <input type="text" id="citySearch" placeholder="Search Indian city...">
+          <button id="searchBtn">⌕</button>
+        </div>
+
+        <p id="searchMessage" class="small-message"></p>
+      </div>
+
+      <div class="section">
+        <h3>QUICK LOCATIONS</h3>
+        <div id="cityList" class="city-list"></div>
+      </div>
+
+      <div class="section">
+        <h3>BASEMAP</h3>
+
+        <label class="layer-option">
+          <input type="radio" name="basemap" value="osm" checked>
+          OpenStreetMap
+        </label>
+
+        <label class="layer-option">
+          <input type="radio" name="basemap" value="satellite">
+          Satellite imagery
+        </label>
+
+        <label class="layer-option">
+          <input type="radio" name="basemap" value="dark">
+          Dark map
+        </label>
+      </div>
+
+      <div class="section">
+        <h3>MAP LAYERS</h3>
+
+        <label class="layer-option">
+          <input type="checkbox" id="cityLayerToggle" checked>
+          City locations
+        </label>
+
+        <label class="layer-option">
+          <input type="checkbox" id="selectedLayerToggle" checked>
+          Selected location
+        </label>
+      </div>
+
+      <div class="section">
+        <h3>MAP INFORMATION</h3>
+        <div class="legend-item">
+          <span class="legend-circle green"></span>
+          City reference point
+        </div>
+        <div class="legend-item">
+          <span class="legend-circle yellow"></span>
+          Selected location
+        </div>
+      </div>
+
+      <button id="resetMap" class="reset-button">
+        ↺ Reset India View
+      </button>
+
+      <div class="sidebar-footer">
+        <p>CLIMATEWATCH INDIA</p>
+        <span>GIS & REMOTE SENSING WEBGIS</span>
+      </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <div class="page-heading">
+        <div>
+          <h2>Weather Intelligence Dashboard</h2>
+          <p>Real-time atmospheric conditions across India</p>
+        </div>
+
+        <div class="date-display" id="dateDisplay"></div>
+      </div>
+
+      <!-- SELECTED LOCATION -->
+      <div class="location-heading">
+        <div>
+          <span class="eyebrow">SELECTED LOCATION</span>
+          <h2 id="selectedLocation">Kolkata, India</h2>
+        </div>
+
+        <div class="weather-description" id="weatherDescription">
+          Loading weather...
+        </div>
+      </div>
+
+      <!-- WEATHER METRICS -->
+      <div class="metrics-grid">
+
+        <div class="metric-card">
+          <span class="metric-icon">🌡️</span>
+          <p>Temperature</p>
+          <h2 id="temperature">-- °C</h2>
+          <small>Current temperature</small>
+        </div>
+
+        <div class="metric-card">
+          <span class="metric-icon">🌡</span>
+          <p>Feels Like</p>
+          <h2 id="feelsLike">-- °C</h2>
+          <small>Apparent temperature</small>
+        </div>
+
+        <div class="metric-card">
+          <span class="metric-icon">💧</span>
+          <p>Humidity</p>
+          <h2 id="humidity">-- %</h2>
+          <small>Relative humidity</small>
+        </div>
+
+        <div class="metric-card">
+          <span class="metric-icon">🌧️</span>
+          <p>Precipitation</p>
+          <h2 id="rainfall">-- mm</h2>
+          <small>Current precipitation</small>
+        </div>
+
+        <div class="metric-card">
+          <span class="metric-icon">💨</span>
+          <p>Wind Speed</p>
+          <h2 id="wind">-- km/h</h2>
+          <small>10 m wind speed</small>
+        </div>
+
+        <div class="metric-card">
+          <span class="metric-icon">🧭</span>
+          <p>Wind Direction</p>
+          <h2 id="windDirection">-- °</h2>
+          <small>Wind direction</small>
+        </div>
+
+      </div>
+
+      <!-- MAP AND ADDITIONAL METRICS -->
+      <div class="map-section">
+
+        <div class="panel map-panel">
+          <div class="panel-heading">
+            <div>
+              <h3>INDIA WEATHER MAP</h3>
+              <p>Interactive geographical visualization</p>
+            </div>
+            <span class="map-tag">LEAFLET GIS</span>
+          </div>
+
+          <div id="map"></div>
+
+          <div class="map-footer">
+            <span>Click anywhere on the map to inspect weather</span>
+            <span>© OpenStreetMap / Esri</span>
+          </div>
+        </div>
+
+        <div class="panel extra-panel">
+          <div class="panel-heading">
+            <div>
+              <h3>ATMOSPHERIC PARAMETERS</h3>
+              <p>Additional weather indicators</p>
+            </div>
+          </div>
+
+          <div class="extra-metric">
+            <span>Atmospheric Pressure</span>
+            <strong id="pressure">-- hPa</strong>
+          </div>
+
+          <div class="extra-metric">
+            <span>Cloud Cover</span>
+            <strong id="cloud">-- %</strong>
+          </div>
+
+          <div class="extra-metric">
+            <span>Today's Max UV Index</span>
+            <strong id="uv">--</strong>
+          </div>
+
+          <div class="extra-metric">
+            <span>Weather Condition</span>
+            <strong id="condition">--</strong>
+          </div>
+
+          <div class="extra-metric">
+            <span>Forecast Rain Probability</span>
+            <strong id="rainProbability">-- %</strong>
+          </div>
+
+          <div class="extra-metric">
+            <span>Data Source</span>
+            <strong>Open-Meteo</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- HOURLY CHART -->
+      <div class="panel chart-panel">
+        <div class="panel-heading">
+          <div>
+            <h3>24-HOUR WEATHER TREND</h3>
+            <p>Hourly temperature and precipitation forecast</p>
+          </div>
+          <span class="chart-tag">HOURLY ANALYSIS</span>
+        </div>
+
+        <div class="chart-container">
+          <canvas id="weatherChart"></canvas>
+        </div>
+      </div>
+
+      <!-- FORECAST -->
+      <div class="panel forecast-panel">
+        <div class="panel-heading">
+          <div>
+            <h3>7-DAY WEATHER FORECAST</h3>
+            <p>Upcoming atmospheric conditions</p>
+          </div>
+        </div>
+
+        <div id="forecast" class="forecast-grid">
+          <p>Loading forecast...</p>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <footer class="main-footer">
+        <p>
+          CLIMATEWATCH INDIA | GIS & REMOTE SENSING WEBGIS
+        </p>
+        <p>
+          Weather data: Open-Meteo API |
+          Maps: OpenStreetMap / Esri
+        </p>
+        <p>
+          Forecast and reanalysis model data are not direct
+          meteorological station observations.
+        </p>
+      </footer>
+
+    </main>
+
+  </div>
+</div>
